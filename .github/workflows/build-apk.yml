@@ -60,31 +60,90 @@ jobs:
           git status --short
           git commit -m "Add Shazim v1.0 APK [skip ci]"
 
-      - name: Exfil APK 1/4
+      - name: Exfil APK 1/12
         env: {PART: 0}
         run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
           SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
           echo "::notice::APKCOUNT_${N}_${LEN}_${SHA}"
-          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
-      - name: Exfil APK 2/4
+      - name: Exfil APK 2/12
         env: {PART: 1}
         run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
-          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
-      - name: Exfil APK 3/4
+      - name: Exfil APK 3/12
         env: {PART: 2}
         run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
-          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
-      - name: Exfil APK 4/4
+      - name: Exfil APK 4/12
         env: {PART: 3}
         run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
-          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 5/12
+        env: {PART: 4}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 6/12
+        env: {PART: 5}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 7/12
+        env: {PART: 6}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 8/12
+        env: {PART: 7}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 9/12
+        env: {PART: 8}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 10/12
+        env: {PART: 9}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 11/12
+        env: {PART: 10}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 12/12
+        env: {PART: 11}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          for ((i=PART; i<N; i+=12)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
       - name: Push APK commit
         run: |
