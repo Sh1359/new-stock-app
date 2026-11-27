@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shazim — UI/UX Design Showcase</title>
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+  body{background:#2b1a10;color:#FFFBF4;font-family:sans-serif;margin:0}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 16px 60px}
+  .hero{text-align:center;margin-bottom:8px}
+  .hero img{width:84px;height:84px;border-radius:22px;box-shadow:0 8px 30px rgba(249,115,22,.5)}
+  .hero h1{margin:12px 0 4px;font-size:30px}
+  .hero h1 span{color:#FB8B2C}
+  .hero p{color:#E5D5C3;margin:4px 0 20px}
+  .pill{display:inline-block;background:#F97316;color:#fff;font-size:13px;font-weight:800;border-radius:99px;padding:6px 16px;margin:4px}
+  .sec{background:#3B2314;border-radius:24px;padding:22px;margin:22px 0}
+  .sec h2{margin:0 0 4px;font-size:21px;color:#FFB25C}
+  .sec p.d{color:#E5D5C3;font-size:14px;margin:0 0 16px}
+  .swatches{display:flex;flex-wrap:wrap;gap:12px}
+  .sw{width:104px;text-align:center;font-size:12px}
+  .sw i{display:block;height:56px;border-radius:16px;border:2px solid rgba(255,255,255,.25)}
+  .sw b{display:block;margin-top:6px}
+  .sw span{color:#C9AE97;font-size:11px}
+  .phones{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:30px;justify-items:center}
+  .pwrap{width:100%;max-width:320px}
+  .pcap{font-weight:800;margin-bottom:10px;color:#FFD3A3;font-size:16px}
+  .pcap small{display:block;color:#C9AE97;font-weight:400;font-size:12px}
+  .phone{width:300px;max-width:100%;height:650px;background:#FFFBF4;border:10px solid #0f0a06;border-radius:46px;overflow:hidden;position:relative;margin:0 auto;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .phone .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:104px;height:22px;background:#0f0a06;border-radius:99px;z-index:9}
+  .pscreen{height:100%;overflow-y:auto;scrollbar-width:none;position:relative;color:#3B2314}
+  .pscreen::-webkit-scrollbar{display:none}
+  .phone header.top{position:relative;border-radius:0 0 22px 22px;padding-top:34px}
+  .phone nav.bottom{position:sticky;bottom:0;left:0;transform:none;max-width:none}
+  .phone main{padding:12px 12px 16px}
+  .cam-mock{background:linear-gradient(135deg,#1c1410,#4a3220 60%,#1c1410);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px}
+  .demo-btns{display:flex;flex-wrap:wrap;gap:8px}
+  .demo-btns .btn{width:auto}
+  .type-row{background:#FFFBF4;color:#3B2314;border-radius:16px;padding:14px 16px;margin-top:10px}
+  footer{text-align:center;color:#C9AE97;font-size:13px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <img src="../icons/icon-192.png" alt="Shazim">
+    <h1>Shazim <span>Stock Management</span></h1>
+    <p>UI/UX ডিজাইন শোকেস — মোবাইল অ্যাপের সব স্ক্রিন</p>
+    <div><span class="pill">✅ আসল CSS দিয়েই বানানো — ১০০% আসল ডিজাইন</span> <span class="pill">📱 Android APK + PWA</span> <span class="pill">🌐 বাংলা / English</span></div>
+  </div>
+
+  <!-- DESIGN TOKENS -->
+  <div class="sec">
+    <h2>🎨 Design Tokens — রঙ</h2>
+    <p class="d">হালকা কমলা + অফ-হোয়াইট প্রিমিয়াম থিম</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#FFFBF4"></i><b>Off-White</b><span>#FFFBF4 ব্যাকগ্রাউন্ড</span></div>
+      <div class="sw"><i style="background:#F97316"></i><b>Orange</b><span>#F97316 প্রাইমারি</span></div>
+      <div class="sw"><i style="background:#FFE3C2"></i><b>Soft Peach</b><span>#FFE3C2 কার্ড/চিপ</span></div>
+      <div class="sw"><i style="background:#3B2314"></i><b>Cocoa Ink</b><span>#3B2314 লেখা</span></div>
+      <div class="sw"><i style="background:#16A34A"></i><b>Green</b><span>Matched / Excess</span></div>
+      <div class="sw"><i style="background:#DC2626"></i><b>Red</b><span>Short / Error</span></div>
+      <div class="sw"><i style="background:#F59E0B"></i><b>Amber</b><span>Duplicate / Warn</span></div>
+      <div class="sw"><i style="background:#0EA5E9"></i><b>Blue</b><span>Manual / Info</span></div>
+    </div>
+    <div class="type-row">
+      <h3 style="margin:0 0 8px">🔘 বাটন, ব্যাজ ও কম্পোনেন্ট</h3>
+      <div class="demo-btns">
+        <button class="btn btn-primary">প্রাইমারি</button>
+        <button class="btn btn-soft">সফট</button>
+        <button class="btn btn-white">হোয়াইট</button>
+        <button class="btn btn-green">সবুজ</button>
+        <button class="btn btn-red">লাল</button>
+        <button class="btn btn-primary btn-sm">ছোট</button>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="badge b-ok">Matched</span><span class="badge b-man">Manual</span><span class="badge b-dup">Duplicate</span><span class="badge b-nf">Not Found</span><span class="badge b-short">SHORT</span><span class="badge b-excess">EXCESS</span><span class="badge b-match">MATCH</span><span class="badge b-inv">Invalid</span>
+      </div>
+      <div style="margin-top:10px"><div class="switch on"><div class="knob"></div></div></div>
+      <div class="seg" style="max-width:280px"><button class="on">বাংলা</button><button>English</button></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>📱 App Screens — সব স্ক্রিন</h2>
+    <p class="d">প্রতিটি ফোনের ভেতর স্ক্রল করা যাবে (আসল অ্যাপের মতোই)</p>
+    <div class="phones">
+
+      <!-- 1 SPLASH -->
+      <div class="pwrap"><div class="pcap">1. Splash Screen<small>অ্যাপ চালুর লোডিং</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(180deg,#FFFBF4,#FFE3C2)">
+          <img src="../icons/icon-192.png" style="width:110px;height:110px;border-radius:28px;box-shadow:0 10px 30px rgba(249,115,22,.4)">
+          <h1 style="margin:14px 0 2px;font-size:30px">Shazim</h1>
+          <p style="color:var(--sub);margin:0 0 18px">Stock Management</p>
+          <div class="progress" style="width:70%"><i style="width:72%"></i></div>
+          <div class="msg" style="margin-top:10px;font-size:13px;color:var(--sub)">Scan ৭,৫০০…</div>
+        </div>
+      </div></div></div>
+
+      <!-- 2 HOME -->
+      <div class="pwrap"><div class="pcap">2. হোম ড্যাশবোর্ড<small>সব হিসাব এক নজরে</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Operator 1</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="kpis">
+            <div class="kpi orange"><div class="bar-top"></div><div class="lb">🧾 মোট স্ক্যান</div><div class="vl">10,672</div><div class="sm">Excel Archive</div></div>
+            <div class="kpi red"><div class="lb">📉 শরটেজ</div><div class="vl">-251</div><div class="sm">-৳335,259</div></div>
+            <div class="kpi green"><div class="lb">📈 এক্সেস</div><div class="vl">+126</div><div class="sm">৳66,812</div></div>
+            <div class="kpi amber"><div class="lb">❓ Not Found</div><div class="vl">8</div><div class="sm">Duplicate: 37</div></div>
+          </div>
+          <div class="card"><h3>⚖️ System বনাম Physical</h3>
+            <div class="recon-row"><span class="k">📦 System স্টক</span><span class="v">16,920 <small>৳23,491,830</small></span></div>
+            <div class="recon-row"><span class="k">📋 Physical স্টক</span><span class="v">16,795 <small>৳23,223,383</small></span></div>
+            <div class="recon-row"><span class="k">➖ পার্থক্য</span><span class="v neg">-125 <small>-৳268,447</small></span></div>
+          </div>
+          <div class="card"><h3>⚡ দ্রুত কাজ</h3><div class="grid2">
+            <div class="act"><div class="ic">📷</div><div class="tx">নতুন স্ক্যান</div></div>
+            <div class="act"><div class="ic">📦</div><div class="tx">স্টক তালিকা</div></div>
+            <div class="act"><div class="ic">⚠️</div><div class="tx">সমস্যা</div></div>
+            <div class="act"><div class="ic">📄</div><div class="tx">রিপোর্ট</div></div>
+          </div></div>
+          <div class="card"><h3>🔥 টপ শরটেজ</h3>
+            <div class="list-item"><div class="r1"><span class="art">551-6066</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-34</b></div><div class="meta">Sys 40 → Phy 6</div></div>
+            <div class="list-item"><div class="r1"><span class="art">814-6111</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-31</b></div><div class="meta">Sys 105 → Phy 74</div></div>
+          </div>
+        </main>
+        <nav class="bottom"><button class="on"><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 3 SCAN -->
+      <div class="pwrap"><div class="pcap">3. স্ক্যান<small>ক্যামেরা / স্ক্যানার / ম্যানুয়াল</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Operator 1</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Stock Take — Nov 2026</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="mode-tabs"><button class="on">📷 ক্যামেরা</button><button>⌨️ স্ক্যানার</button><button>✍️ ম্যানুয়াল</button></div>
+          <div class="card"><div class="viewfinder"><div class="cam-mock">📦</div><div class="scan-frame"></div><div class="scan-hint">বারকোড ফ্রেমের ভেতর ধরুন</div></div>
+          <div class="btn-row"><button class="btn btn-soft btn-sm">🔦 টর্চ</button><button class="btn btn-soft btn-sm">⌨️ Scanner</button></div></div>
+          <div class="result-card show ok"><div class="big">✅ Matched!</div><div class="sub"><b>557-2212</b> • গণনা: <b>15</b> / Sys 20 • +1</div></div>
+          <div class="scan-counters"><div class="c"><b>1,240</b><span>মোট</span></div><div class="c"><b style="color:var(--green)">1,205</b><span>✅</span></div><div class="c"><b style="color:var(--amber)">28</b><span>⛔</span></div><div class="c"><b style="color:var(--red)">7</b><span>❓</span></div></div>
+          <div class="card"><h3>🕘 শেষ স্ক্যান</h3><div class="mini-log">
+            <div class="mrow"><span class="badge b-ok">Matched</span><span style="flex:1"><b>557-2212</b></span><small>2:41 PM</small></div>
+            <div class="mrow"><span class="badge b-dup">Duplicate</span><span style="flex:1"><b>557-2212</b></span><small>2:40 PM</small></div>
+            <div class="mrow"><span class="badge b-man">Manual</span><span style="flex:1"><b>814-6099 ×12</b></span><small>2:38 PM</small></div>
+          </div></div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab on"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 4 STOCK -->
+      <div class="pwrap"><div class="pcap">4. স্টক তালিকা<small>১,৫৬৯ article + ফিল্টার</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Operator 1</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="searchbar"><input placeholder="🔍 Article খুঁজুন…"></div>
+          <div class="chips"><button class="chip orange on">সব</button><button class="chip orange">SHORT</button><button class="chip orange">EXCESS</button><button class="chip orange">MATCH</button></div>
+          <div class="list-item"><div class="r1"><span class="art">551-6066</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-34</b></div><div class="meta">Cat 12 • ৳1,250 • Sys <b>40</b> → Phy <b>6</b></div></div>
+          <div class="list-item"><div class="r1"><span class="art">900-0091</span><span class="badge b-excess">EXCESS</span><span style="flex:1"></span><b class="pos">+36</b></div><div class="meta">Cat 52 • ৳850 • Sys <b>10</b> → Phy <b>46</b></div></div>
+          <div class="list-item"><div class="r1"><span class="art">557-2212</span><span class="badge b-match">MATCH</span><span style="flex:1"></span><b>0</b></div><div class="meta">Cat 52 • ৳990 • Sys <b>20</b> → Phy <b>20</b></div></div>
+          <div class="list-item"><div class="r1"><span class="art">814-6111</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-31</b></div><div class="meta">Cat 14 • ৳1,450 • Sys <b>105</b> → Phy <b>74</b></div></div>
+          <div style="text-align:center;margin:10px"><button class="btn btn-soft btn-sm">আরও দেখুন</button></div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button class="on"><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 5 ARTICLE -->
+      <div class="pwrap"><div class="pcap">5. Article ডিটেইলস<small>ট্যাপ করলে পপ-আপ</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <div style="position:absolute;inset:0;background:rgba(59,35,20,.5);z-index:1"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;top:60px;background:#FFFBF4;border-radius:26px 26px 0 0;z-index:2;padding:12px 14px;overflow-y:auto;scrollbar-width:none">
+          <div class="grab"></div>
+          <h3>📦 551-6066 <span class="badge b-short">SHORT</span></h3>
+          <div class="recon-row"><span class="k">ক্যাটাগরি</span><span class="v">12</span></div>
+          <div class="recon-row"><span class="k">মূল্য</span><span class="v">৳1,250</span></div>
+          <div class="recon-row"><span class="k">System</span><span class="v">40</span></div>
+          <div class="recon-row"><span class="k">Physical</span><span class="v">6</b></span></div>
+          <div class="recon-row"><span class="k">পার্থক্য</span><span class="v neg">-34</span></div>
+          <div class="recon-row"><span class="k">Variance</span><span class="v">-৳42,500</span></div>
+          <div class="btn-row"><button class="btn btn-soft">📷 স্ক্যান</button><button class="btn btn-primary">🛠️ Resolve</button></div>
+          <h3 style="margin-top:12px">🧾 স্ক্যান ইতিহাস (6)</h3>
+          <div class="mrow"><span class="badge b-ok">Matched</span><span style="flex:1;font-size:13px">551606600012…</span><small>11:02 AM</small></div>
+          <div class="mrow"><span class="badge b-ok">Matched</span><span style="flex:1;font-size:13px">551606600008…</span><small>10:58 AM</small></div>
+          <div class="mrow"><span class="badge b-dup">Duplicate</span><span style="flex:1;font-size:13px">551606600008…</span><small>10:57 AM</small></div>
+        </div>
+      </div></div></div>
+
+      <!-- 6 LOG -->
+      <div class="pwrap"><div class="pcap">6. স্ক্যান লগ<small>প্রতিটি স্ক্যানের রেকর্ড</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Operator 1</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="chips"><button class="chip on">সব</button><button class="chip">Matched</button><button class="chip">Manual</button><button class="chip">Duplicate</button><button class="chip">Not Found</button></div>
+          <div class="list-item"><div class="r1"><span class="n">#10672</span><span class="badge b-ok">Matched</span><span style="flex:1"></span><small>3:12 PM</small></div><div style="font-weight:700;margin-top:3px">📦 557-2212 • 557221200145</div><div class="meta">👤 Excel • ⌨️</div></div>
+          <div class="list-item"><div class="r1"><span class="n">#10671</span><span class="badge b-dup">Duplicate</span><span style="flex:1"></span><small>3:11 PM</small></div><div style="font-weight:700;margin-top:3px">📦 557-2212 • 557221200145</div><div class="meta">👤 Excel • ⌨️</div></div>
+          <div class="list-item"><div class="r1"><span class="n">#10670</span><span class="badge b-man">Manual</span><span style="flex:1"></span><small>3:10 PM</small></div><div style="font-weight:700;margin-top:3px">📦 814-6099 ✍️ ×12</div><div class="meta">👤 Excel • ✍️ • ×12</div></div>
+          <div class="list-item"><div class="r1"><span class="n">#10669</span><span class="badge b-nf">Not Found</span><span style="flex:1"></span><small>3:09 PM</small></div><div style="font-weight:700;margin-top:3px">📦 999999900001</div><div class="meta">👤 Excel • ⌨️</div><div class="btn-row" style="margin-top:6px"><button class="btn btn-primary btn-sm">＋ মাস্টারে যোগ</button></div></div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button class="on"><span class="ic">🧾</span><span>লগ</span></button><button><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 7 EXCEPTIONS -->
+      <div class="pwrap"><div class="pcap">7. সমস্যা (Exceptions)<small>SHORT / EXCESS / Not Found</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="kpis">
+            <div class="kpi red"><div class="lb">📉 Short</div><div class="vl">99</div></div>
+            <div class="kpi green"><div class="lb">📈 Excess</div><div class="vl">46</div></div>
+            <div class="kpi amber"><div class="lb">❓ NF কোড</div><div class="vl">5</div></div>
+            <div class="kpi orange"><div class="bar-top"></div><div class="lb">🛠️ Pending</div><div class="vl">145</div></div>
+          </div>
+          <div class="card"><h3>❓ NOT FOUND কোড</h3>
+            <div class="list-item"><div class="r1"><span class="art">999-9999</span><span style="flex:1"></span><b>×3</b></div><div class="btn-row" style="margin-top:6px"><button class="btn btn-primary btn-sm">＋ মাস্টারে যোগ</button><button class="btn btn-soft btn-sm">উপেক্ষা</button></div></div>
+          </div>
+          <div class="card"><h3>📉 টপ Short</h3>
+            <div class="list-item"><div class="r1"><span class="art">551-6066</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-34</b></div><div class="meta">Sys 40 → Phy 6 • -৳42,500</div></div>
+            <div class="list-item"><div class="r1"><span class="art">814-6111</span><span class="badge b-short">SHORT</span><span style="flex:1"></span><b class="neg">-31</b></div><div class="meta">Sys 105 → Phy 74 • -৳44,950</div></div>
+          </div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 8 REPORTS -->
+      <div class="pwrap"><div class="pcap">8. রিপোর্ট<small>প্রিন্ট / PDF / CSV</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="card"><h3>📄 Variance রিপোর্ট</h3>
+            <div class="grid2"><div class="field"><label>ধরন</label><select><option>সব সমস্যা</option></select></div><div class="field"><label>ক্যাটাগরি</label><select><option>সব</option></select></div></div>
+            <div class="btn-row"><button class="btn btn-primary">👁️ প্রিভিউ</button><button class="btn btn-soft">🖨️ প্রিন্ট/PDF</button><button class="btn btn-soft">⬇️ CSV</button></div>
+          </div>
+          <div class="print-area"><div class="print-head"><div class="print-logo">Shazim</div><div class="print-title">Variance রিপোর্ট</div><div class="print-meta">Excel Archive • Manager • ২৭ নভে, ২০২৬</div></div>
+            <div class="print-totals"><span>রেকর্ড: <b>145</b></span><span>মোট Variance: <b>-৳268,447</b></span></div>
+            <table class="print-table"><thead><tr><th>#</th><th>Article</th><th>Sys</th><th>Phy</th><th>Diff</th></tr></thead><tbody>
+              <tr><td>1</td><td><b>551-6066</b></td><td>40</td><td>6</td><td><b>-34</b></td></tr>
+              <tr><td>2</td><td><b>814-6111</b></td><td>105</td><td>74</td><td><b>-31</b></td></tr>
+              <tr><td>3</td><td><b>900-0091</b></td><td>10</td><td>46</td><td><b>+36</b></td></tr>
+            </tbody></table>
+            <div class="print-sign"><div>প্রস্তুতকারী ____</div><div>যাচাইকারী ____</div></div>
+          </div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 9 INSIGHTS -->
+      <div class="pwrap"><div class="pcap">9. ইনসাইটস<small>স্মার্ট পরামর্শ</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Stock Take — Nov 2026</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="kpis">
+            <div class="kpi orange"><div class="bar-top"></div><div class="lb">🎯 Accuracy</div><div class="vl">97%</div></div>
+            <div class="kpi amber"><div class="lb">📦 Coverage</div><div class="vl">64%</div></div>
+            <div class="kpi red"><div class="lb">🕸️ No-Move</div><div class="vl">212</div></div>
+            <div class="kpi green"><div class="lb">⏰ Peak Hour</div><div class="vl">11:00</div></div>
+          </div>
+          <div class="card"><h3>👥 অপারেটর লিডারবোর্ড</h3>
+            <div class="mrow"><b>🥇 Rahim</b><span style="flex:1"></span><b>4,120</b></div>
+            <div class="mrow"><b>🥈 Karim</b><span style="flex:1"></span><b>3,540</b></div>
+            <div class="mrow"><b>🥉 Operator 1</b><span style="flex:1"></span><b>2,180</b></div>
+          </div>
+          <div class="card"><h3>💡 পরামর্শ</h3>
+            <div class="mrow"><span style="font-size:20px">📉</span><span style="flex:1;font-size:13px">এই ৩টি আগে recount করুন: 551-6066, 814-6111, 577-9182</span></div>
+            <div class="mrow"><span style="font-size:20px">❓</span><span style="flex:1;font-size:13px">8টি NOT FOUND — মাস্টারে যোগ করুন</span></div>
+          </div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 10 MORE -->
+      <div class="pwrap"><div class="pcap">10. আরও মেনু<small>সব মডিউল</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="card">
+            <div class="set-row"><div class="ic">⚠️</div><div class="tx"><b>সমস্যা</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">📄</div><div class="tx"><b>রিপোর্ট</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">📊</div><div class="tx"><b>ইনসাইটস</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">🗂️</div><div class="tx"><b>সেশন</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">📦</div><div class="tx"><b>মাস্টার</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">👥</div><div class="tx"><b>ইউজার</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">💾</div><div class="tx"><b>ব্যাকআপ</b></div><div style="color:var(--sub)">›</div></div>
+            <div class="set-row"><div class="ic">⚙️</div><div class="tx"><b>সেটিংস</b></div><div style="color:var(--sub)">›</div></div>
+          </div>
+          <div class="card" style="text-align:center"><b>Shazim</b> <span class="meta">v1.0 • offline-first</span><div class="meta" style="margin-top:6px">🏬 House-1, Road-12, Sector-10, Uttara</div></div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 11 SETTINGS -->
+      <div class="pwrap"><div class="pcap">11. সেটিংস<small>ভাষা, সাউন্ড, সাহায্য</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Oct-2026 • Excel Archive</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="card"><h3>🌐 ভাষা</h3><div class="seg"><button class="on">বাংলা</button><button>English</button></div></div>
+          <div class="card"><h3>🔔 সাউন্ড ও ভাইব্রেশন</h3>
+            <div class="set-row"><div class="ic">🟢</div><div class="tx"><b>🔊 সাউন্ড</b></div><div class="switch on"><div class="knob"></div></div></div>
+            <div class="set-row"><div class="ic">🟢</div><div class="tx"><b>📳 ভাইব্রেশন</b></div><div class="switch on"><div class="knob"></div></div></div>
+          </div>
+          <div class="card"><h3>📷 স্ক্যান মোড</h3>
+            <div class="set-row"><div class="ic">🟢</div><div class="tx"><b>🔁 একটানা স্ক্যান</b></div><div class="switch on"><div class="knob"></div></div></div>
+            <div class="field" style="margin-top:8px"><label>ডিফল্ট মোড</label><select><option>📷 Camera</option></select></div>
+          </div>
+          <div class="card"><h3>❓ সাহায্য</h3><div class="help"><b>1.</b> Scan → ৩ ভাবে স্ক্যান করুন।<br><b>2.</b> DUPLICATE = আগেই স্ক্যান হয়েছে।<br><b>3.</b> NOT FOUND = মাস্টারে যোগ করুন।</div></div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+      <!-- 12 SESSIONS -->
+      <div class="pwrap"><div class="pcap">12. সেশন<small>একাধিক গণনা আলাদা</small></div>
+      <div class="phone"><div class="notch"></div><div class="pscreen">
+        <header class="top"><div class="row1"><img class="logo-sm" src="../icons/icon-192.png"><div><div class="app-name">Shazim</div><div class="app-sub">Stock Management</div></div><div class="spacer"></div><button class="user-chip">👤 Manager</button><button class="icon-btn">⚙️</button></div><div class="session-pill">🗂️ <select><option>Stock Take — Nov 2026</option></select><button class="icon-btn">＋</button></div></header>
+        <main>
+          <div class="card"><h3>🗂️ সেশন</h3><div class="btn-row"><button class="btn btn-primary">＋ নতুন সেশন</button></div></div>
+          <div class="card hl"><div class="r1"><b>Stock Take — Nov 2026</b><span class="badge b-ok">চালু</span></div>
+            <div class="meta">📅 ২৭ নভে • 👤 Manager</div>
+            <div class="meta">🧾 1,240 • ✅ 1,205 • ⛔ 28 • ❓ 7</div>
+            <div class="btn-row"><button class="btn btn-soft btn-sm">🔒 বন্ধ করুন</button><button class="btn btn-white btn-sm">✏️</button></div>
+          </div>
+          <div class="card"><div class="r1"><b>Oct-2026 • Excel Archive</b></div>
+            <div class="meta">📅 ১৫ অক্টো • 👤 Excel • 🗃️ Excel</div>
+            <div class="meta">🧾 10,672 • ✅ 10,627 • ⛔ 37 • ❓ 8</div>
+            <div class="btn-row"><button class="btn btn-primary btn-sm">▶ চালু করুন</button><button class="btn btn-soft btn-sm">🔒 বন্ধ করুন</button></div>
+          </div>
+        </main>
+        <nav class="bottom"><button><span class="ic">🏠</span><span>হোম</span></button><button class="scan-fab"><span class="ic">📷</span><span>স্ক্যান</span></button><button><span class="ic">📦</span><span>স্টক</span></button><button><span class="ic">🧾</span><span>লগ</span></button><button class="on"><span class="ic">⋮</span><span>আরও</span></button></nav>
+      </div></div></div>
+
+    </div>
+  </div>
+
+  <div class="sec">
+    <h2>🧭 UX Flow — ব্যবহারের ধাপ</h2>
+    <p class="d">দোকানের কর্মচারী যেভাবে ব্যবহার করবে</p>
+    <div class="type-row" style="font-size:14.5px;line-height:2.1">
+      <b>1.</b> 📲 অ্যাপ খুলুন → ট্যুর দেখুন → <b>2.</b> 🗂️ নতুন সেশন খুলুন (যেমন "Stock Take — Nov 2026") → <b>3.</b> 📷 Scan চাপুন → ক্যামেরায় বারকোড ধরুন (<i>বিপ!</i> ✅) → <b>4.</b> ⛔ DUPLICATE বাজলে বুঝুন মালটা আগেই গোনা হয়েছে → <b>5.</b> ❓ NOT FOUND এলে মাস্টারে যোগ করুন → <b>6.</b> 📦 Stock-এ SHORT/EXCESS দেখুন → ট্যাপ করে recount → <b>7.</b> 📄 Reports → প্রিন্ট/PDF → ম্যানেজারকে দিন → <b>8.</b> 💾 Backup নিন (WhatsApp/Drive-এ রাখুন)
+    </div>
+  </div>
+
+  <footer>Shazim Stock Management • UI/UX Showcase v1.0 • 🏬 Uttara, Dhaka • 📞 02-48956768</footer>
+</div>
+</body>
+</html>

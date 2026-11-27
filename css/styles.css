@@ -177,3 +177,42 @@ canvas.chart{width:100%;height:auto;background:#fff;border:1px solid var(--borde
   #print-area th,#print-area td{border:1px solid #000;padding:3px 4px;text-align:center}
   #print-area .sign{display:flex;justify-content:space-between;margin-top:40px;font-size:12px}
 }
+
+/* ---------- missing components (v1.1) ---------- */
+.seg{display:flex;background:var(--primary-soft);border:1px solid var(--border);border-radius:14px;padding:4px;gap:4px;margin-top:8px}
+.seg button{flex:1;border:0;background:transparent;padding:11px;border-radius:10px;font-weight:800;font-size:15px;color:var(--sub);cursor:pointer}
+.seg button.on{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(249,115,22,.25)}
+.switch{width:52px;height:30px;border-radius:99px;background:#E5D5C3;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.switch.on{background:var(--green)}
+.switch .knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:left .2s}
+.switch.on .knob{left:25px}
+.scan-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#fff;font-size:13px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.help{font-size:14px;line-height:1.9;color:var(--text)}
+.hl{border:2px solid var(--primary) !important;box-shadow:0 4px 16px rgba(249,115,22,.25)}
+#tour{position:fixed;inset:0;background:rgba(59,35,20,.55);z-index:80;display:none;align-items:flex-end;justify-content:center;padding:16px}
+#tour.show{display:flex}
+.tour-card{background:#fff;border-radius:24px;padding:26px 22px;max-width:420px;width:100%;text-align:center}
+.tour-card h3{margin:8px 0 6px;font-size:19px}
+.tour-card p{color:var(--sub);font-size:14.5px;line-height:1.7;margin-bottom:12px}
+.tour-dots{display:flex;gap:7px;justify-content:center;margin-bottom:14px}
+.tour-dots i{width:8px;height:8px;border-radius:50%;background:#E5D5C3}
+.tour-dots i.on{background:var(--primary);width:22px;border-radius:99px}
+
+/* ---------- report print (class-based) ---------- */
+.print-area{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-top:12px}
+.print-head{text-align:center;border-bottom:2px solid var(--primary);padding-bottom:10px;margin-bottom:10px}
+.print-logo{font-size:24px;font-weight:900;color:var(--primary)}
+.print-title{font-weight:800;font-size:15px;margin-top:2px}
+.print-meta{font-size:12px;color:var(--sub);margin-top:4px}
+.print-totals{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13.5px;background:var(--primary-soft);border-radius:12px;padding:10px 14px;margin-bottom:10px}
+table.print-table{width:100%;border-collapse:collapse;font-size:12px}
+.print-table th{background:#3B2314;color:#fff;padding:7px 5px;font-size:11.5px}
+.print-table td{border:1px solid var(--border);padding:6px 5px;text-align:center}
+.print-sign{display:flex;justify-content:space-between;margin-top:34px;font-size:13px}
+@media print{
+  body{background:#fff !important}
+  body *{visibility:hidden}
+  #printable,#printable *{visibility:visible}
+  #printable{position:absolute;left:0;top:0;width:100%;border:0;margin:0;border-radius:0}
+}
+.n{font-weight:800;color:var(--sub);font-size:12.5px}

@@ -75,6 +75,8 @@ function statusBadge(st){
 function renderChrome(active){
   document.documentElement.lang = DB.settings.lang==='en'?'en':'bn';
   const u=currentUser(), s=activeSession();
+  document.getElementById('app-header').className='top';
+  document.getElementById('app-nav').className='bottom';
   let sessOpts = DB.sessions.map(x=>'<option value="'+x.id+'"'+(x.id===(s&&s.id)?' selected':'')+'>'+esc(x.name)+(x.closedAt?' ('+t('sessionClosed')+')':'')+'</option>').join('');
   document.getElementById('app-header').innerHTML =
     '<div class="row1"><img class="logo-sm" src="icons/icon-192.png" alt="logo">'+
