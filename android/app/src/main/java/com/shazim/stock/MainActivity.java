@@ -31,6 +31,10 @@ public class MainActivity extends Activity {
         }
         web = new WebView(this);
         setContentView(web);
+        // Native asset bridge: lets JS load bundled files even where
+        // fetch()/XHR on file:// URLs is blocked by the WebView.
+        web.addJavascriptInterface(new AssetBridge(getAssets()), "ShazimNative");
+        WebView.setWebContentsDebuggingEnabled(true);
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
@@ -108,6 +112,25 @@ public class MainActivity extends Activity {
             web.goBack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    /** Reads a bundled asset file and returns its text content. */
+    public static class AssetBridge {
+        private final AssetManager assets;
+        AssetBridge(AssetManager assets) { this.assets = assets; }
+
+        @JavascriptInterface
+        public String readAsset(String path) {
+            java.util.Scanner s = null;
+            try {
+                s = new java.util.Scanner(assets.open(path), "UTF-8").useDelimiter("\\A");
+                return s.hasNext() ? s.next() : "";
+            } catch (Exception e) {
+                return null;
+            } finally {
+                if (s != null) { try { s.close(); } catch (Exception ignored) {} }
+            }
         }
     }
 }

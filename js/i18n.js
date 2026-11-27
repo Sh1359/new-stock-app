@@ -9,7 +9,7 @@ bn: {
   physMinusSys:'Physical − System', shortItems:'Short items (positive মোট)', overItems:'Over-counted items',
   quickLookup:'কুইক লুকআপ', quickLookupPh:'বারকোড বা Article লিখুন (যেমন 864-6044)...', lookup:'খুঁজুন',
   quickActions:'কুইক অ্যাকশন', newScan:'নতুন স্ক্যান', stockList:'স্টক লিস্ট', exceptions:'সমস্যা', exportReport:'রিপোর্ট',
-  topShort:'টপ শরটেজ (অগ্রাধিকার)', viewAll:'সব দেখুন', qty:'জোড়া', value:'মূল্য', tk:'৳',
+  topShort:'টপ শরটেজ (অগ্রাধিকার)', topExcess:'টপ এক্সেস', viewAll:'সব দেখুন', qty:'জোড়া', value:'মূল্য', tk:'৳',
   camMode:'📷 ক্যামেরা', devMode:'⌨️ স্ক্যানার', manMode:'✍️ ম্যানুয়াল',
   scanHint:'বারকোড ফ্রেমের ভেতরে ধরুন', startingCam:'ক্যামেরা চালু হচ্ছে...', camDenied:'ক্যামেরা চালু হয়নি। অনুমতি দিন অথবা স্ক্যানার/ম্যানুয়াল ব্যবহার করুন।',
   noBD:'এই ব্রাউজারে auto-read সাপোর্ট নেই — স্ক্যানার মোড বা ম্যানুয়াল ব্যবহার করুন।',
