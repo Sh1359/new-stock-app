@@ -182,21 +182,55 @@ function upsertArticle(art, cat, price, system, extra){
   return {ok:true, key};
 }
 
+/* ---------- local file loader (WebView-proof: fetch -> XHR -> native bridge) ---------- */
+async function fetchLocalJSON(path){
+  // 1) fetch with timeout
+  try{
+    let ctrl, to=null;
+    try{ ctrl = new AbortController(); to=setTimeout(()=>ctrl.abort(), 8000); }catch(e){ ctrl=null; }
+    const r = await fetch(path, ctrl?{signal:ctrl.signal}:undefined);
+    if(to) clearTimeout(to);
+    if(r && r.ok) return await r.json();
+  }catch(e){ /* fall through */ }
+  // 2) XHR (works on file:// where fetch fails; status 0 = success on file://)
+  try{
+    const txt = await new Promise((res, rej)=>{
+      try{
+        const x = new XMLHttpRequest();
+        x.open('GET', path, true);
+        try{ x.timeout = 10000; }catch(e){}
+        x.onload = ()=> (x.status===0||x.status===200) ? res(x.responseText) : rej(new Error('xhr '+x.status));
+        x.onerror = ()=>rej(new Error('xhr err'));
+        x.ontimeout = ()=>rej(new Error('xhr timeout'));
+        x.send();
+      }catch(e){ rej(e); }
+    });
+    return JSON.parse(txt);
+  }catch(e){ /* fall through */ }
+  // 3) Android native bridge (APK: reads straight from assets, always works)
+  try{
+    if(typeof window!=='undefined' && window.ShazimNative && window.ShazimNative.readAsset){
+      const p = String(path||'').replace(/^\.\//,'');
+      const txt = window.ShazimNative.readAsset('www/'+p);
+      if(txt) return JSON.parse(txt);
+    }
+  }catch(e){ /* fall through */ }
+  throw new Error('load-fail '+path);
+}
+
 /* ---------- first-run seed ---------- */
 async function ensureSeeded(progress){
   loadDB(); loadArticles();
   if(DB.seeded && ARTICLES.length) return {already:true};
   // 1. articles
-  progress(10, 'Article...');
-  const aRes = await fetch('data/articles.json');
-  ARTICLES = await aRes.json();
+  progress(10, 'Article লোড হচ্ছে…');
+  ARTICLES = await fetchLocalJSON('data/articles.json');
   saveArticles();
   // 2. demo session + scans
-  progress(30, 'Session...');
+  progress(30, 'সেশন তৈরি হচ্ছে…');
   const s = createSession('Oct-2026 • Excel Archive', DB.branches[0].id, '', {imported:true});
-  progress(45, 'Scan 10,672...');
-  const sRes = await fetch('data/seed.json');
-  const seed = await sRes.json();
+  progress(45, '১০,৬৭২টি স্ক্যান লোড হচ্ছে…');
+  const seed = await fetchLocalJSON('data/seed.json');
   const seen = new Set();
   const T = new Date(seed.t).getTime();
   const batch = [];
@@ -222,7 +256,7 @@ async function ensureSeeded(progress){
   DB.scans = DB.scans.concat(batch);
   DB.seeded = true; saveDB();
   audit('seed.import', '10672 scans');
-  progress(100, 'OK');
+  progress(100, 'প্রস্তুত ✅');
   return {already:false};
 }
 

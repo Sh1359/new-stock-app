@@ -86,10 +86,16 @@ window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); window._
 async function boot(){
   document.getElementById('splash').style.display='flex';
   applyLang();
-  await ensureSeeded((p,msg)=>{
-    document.getElementById('splash-fill').style.width=Math.round(p*100)+'%';
-    document.getElementById('splash-msg').textContent=msg;
-  });
+  try{
+    await ensureSeeded((p,msg)=>{
+      document.getElementById('splash-fill').style.width=Math.round(p*100)+'%';
+      document.getElementById('splash-msg').textContent=msg;
+    });
+  }catch(err){
+    const m = document.getElementById('splash-msg');
+    m.innerHTML = '⚠️ ডেটা লোড হয়নি<br><small style="opacity:.75">'+esc(String((err&&err.message)||err))+'</small><br><button class="btn btn-primary" style="margin-top:14px" onclick="location.reload()">🔁 আবার চেষ্টা করুন</button>';
+    return; // stay on splash with retry — never hang silently
+  }
   applyLang(); renderChrome('home');
   document.getElementById('splash').style.display='none';
   App.go('home'); showTour();
