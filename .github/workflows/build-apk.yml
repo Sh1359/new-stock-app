@@ -62,4 +62,7 @@ jobs:
 
       - name: Push APK commit
         run: |
-          git push origin "HEAD:${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}" > /tmp/push.log 2>&1; EC=$?
+          echo "PUSH_EXIT=$EC"
+          cat /tmp/push.log
+          if [ $EC -ne 0 ]; then echo "::error::PUSH_FAILED exit=$EC msg=$(head -c 2000 /tmp/push.log | tr '\n' ' ')"; exit $EC; fi
