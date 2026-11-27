@@ -2,6 +2,17 @@ name: Build APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [arena/c1fcc741-new-stock-app]
+    paths:
+      - 'android/**'
+      - '.github/workflows/build-apk.yml'
+      - 'index.html'
+      - 'manifest.json'
+      - 'css/**'
+      - 'js/**'
+      - 'data/**'
+      - 'icons/**'
 
 jobs:
   build:
