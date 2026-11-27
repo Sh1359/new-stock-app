@@ -20,9 +20,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        part: [0, 1, 2]
     steps:
       - uses: actions/checkout@v4
 
@@ -43,69 +40,21 @@ jobs:
           echo "asset files:" && find android/app/src/main/assets/www -type f | wc -l
 
       - name: Build debug APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+        run: gradle assembleDebug --no-daemon
         working-directory: android
 
       - uses: actions/upload-artifact@v4
         with:
-          name: shazim-apk-p${{ matrix.part }}
+          name: shazim-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
 
-      - name: Prepare APK file
-        run: |
-          mkdir -p dist
-          cp android/app/build/outputs/apk/debug/app-debug.apk dist/Shazim-v1.0.apk
-          ls -la dist/
-
-      - name: Exfil APK a
-        env:
-          P: ${{ matrix.part }}
-          S: "0"
-        run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
-          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
-          echo "::notice::APKCOUNT_${N}_${LEN}_${SHA}"
-          for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
-
-      - name: Exfil APK b
-        env:
-          P: ${{ matrix.part }}
-          S: "1"
-        run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
-          for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
-
-      - name: Exfil APK c
-        env:
-          P: ${{ matrix.part }}
-          S: "2"
-        run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
-          for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
-
-      - name: Exfil APK d
-        env:
-          P: ${{ matrix.part }}
-          S: "3"
-        run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
-          for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
-
-      - name: Commit APK
-        if: matrix.part == 0
+      - name: Commit APK to branch
         run: |
           git config user.name "arena-bot"
           git config user.email "arena-bot@local"
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/Shazim-v1.0.apk
           git add -f dist/Shazim-v1.0.apk
-          git status --short
-          git commit -m "Add Shazim v1.0 APK [skip ci]"
-
-      - name: Push APK commit
-        if: matrix.part == 0
-        run: |
-          EC=0; git push origin "HEAD:${{ github.ref_name }}" > /tmp/push.log 2>&1 || EC=$?
-          echo "PUSH_EXIT=$EC"
-          cat /tmp/push.log
-          echo "::error::PUSH_DIAG exit=$EC msg=$(head -c 2000 /tmp/push.log | tr '\n' ' ')"
-          [ $EC -eq 0 ] || exit $EC
+          git commit -m "Add Shazim v1.0 APK [skip ci]" || echo "no changes"
+          git push origin "HEAD:${{ github.ref_name }}"
