@@ -40,15 +40,15 @@ const VHome = {
     '<div class="card"><h3>🔥 '+t('topShort')+' <a href="#" style="float:right;font-size:12px" onclick="App.go(\'except\');return false">'+t('viewAll')+'</a></h3><div id="top-short"></div></div>';
     // charts
     drawDonut(document.getElementById('ch-donut'), [
-      {l:t('matched'), v:C.MATCHED, c:'#16A34A'},
-      {l:t('manual'), v:C.MANUAL, c:'#0EA5E9'},
-      {l:t('duplicate'), v:C.DUPLICATE, c:'#F59E0B'},
-      {l:t('notFound'), v:C['NOT FOUND'], c:'#DC2626'},
+      {l:t('matched'), v:C.MATCHED, c:'#3D9A6C'},
+      {l:t('manual'), v:C.MANUAL, c:'#4A90D9'},
+      {l:t('duplicate'), v:C.DUPLICATE, c:'#C08A2E'},
+      {l:t('notFound'), v:C['NOT FOUND'], c:'#D16363'},
     ]);
     drawBars(document.getElementById('ch-bars'), [
-      {l:t('shortage'), v:A.grossS, c:'#DC2626', c2:'#F97316'},
-      {l:t('excess'), v:A.excQ, c:'#16A34A', c2:'#4ADE80'},
-      {l:t('matched'), v:C.MATCHED, c:'#F97316', c2:'#FFB25C'},
+      {l:t('shortage'), v:A.grossS, c:'#D16363', c2:'#E08080'},
+      {l:t('excess'), v:A.excQ, c:'#3D9A6C', c2:'#5CB98A'},
+      {l:t('matched'), v:C.MATCHED, c:'#20907F', c2:'#4CC3AC'},
     ]);
     const top = A.shorts.slice(0,5);
     document.getElementById('top-short').innerHTML = top.length ? top.map(r=>

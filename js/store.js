@@ -21,23 +21,34 @@ function defaultDB(){
     version: 3, seq: 0,
     sessions: [], scans: [], resolutions: {}, audit: [],
     users: [
-      {id:'u-op1', name:'Operator 1', role:'operator'},
-      {id:'u-mgr', name:'Manager', role:'manager'},
+      {id:'u-mgr', name:'Manager', role:'manager', pin:'0848', active:true, createdAt:Date.now()},
+      {id:'u-op1', name:'Operator 1', role:'operator', pin:'1111', active:true, createdAt:Date.now()},
     ],
-    currentUserId: 'u-op1', managerPin: '1234',
-    settings: {lang:'bn', sound:true, vibrate:true, continuous:true},
+    currentUserId: 'u-op1', managerPin: '0848',
+    company: {name:'Shazim Departmental Store', addr:'House-1, Road-12, Sector-10, Uttara, Dhaka-1230', phone:'02-48956768 • 01711-570772'},
+    settings: {lang:'bn', theme:'light', sound:true, vibrate:true, continuous:true, defMode:'cam'},
+    ui: {tab:'home'},
     branches: [{id:'b-main', name:'Main Godown'}],
     activeSessionId: null, seeded: false, lastBackup: null,
   };
 }
 function saveDB(){ try{ localStorage.setItem(DB_KEY, JSON.stringify(DB)); }catch(e){ console.warn('save fail', e); } }
+/* throttled save: stringifying 10k+ scans every keystroke lags low-end phones */
+let _saveT=null, _saveDirty=false;
+function saveDBSoon(){ _saveDirty=true; if(_saveT) return; _saveT=setTimeout(()=>{ _saveT=null; if(_saveDirty){ _saveDirty=false; saveDB(); } }, 1500); }
+function flushSave(){ if(_saveT){ clearTimeout(_saveT); _saveT=null; } if(_saveDirty){ _saveDirty=false; } saveDB(); }
 function loadDB(){
   try{ const raw = localStorage.getItem(DB_KEY); if(raw){ DB = JSON.parse(raw); } }catch(e){}
   if(!DB) DB = defaultDB();
   // migrate older shapes
-  DB.settings = Object.assign({lang:'bn', sound:true, vibrate:true, continuous:true, defMode:'cam'}, DB.settings||{});
+  DB.settings = Object.assign({lang:'bn', theme:'light', sound:true, vibrate:true, continuous:true, defMode:'cam'}, DB.settings||{});
   DB.resolutions = DB.resolutions||{}; DB.audit = DB.audit||[];
   DB.users = (DB.users&&DB.users.length)?DB.users:defaultDB().users;
+  DB.users.forEach((u,i)=>{ if(u.active===undefined) u.active=true; if(!u.pin) u.pin=(u.role==='manager'?'0848':String(1000+i).slice(-4)); if(!u.createdAt) u.createdAt=Date.now(); });
+  if(!DB.managerPin) DB.managerPin='0848';
+  const mg=DB.users.find(u=>u.role==='manager'); if(mg) mg.pin=DB.managerPin;
+  if(!DB.company) DB.company={name:'Shazim Departmental Store', addr:'House-1, Road-12, Sector-10, Uttara, Dhaka-1230', phone:'02-48956768 • 01711-570772'};
+  if(!DB.ui) DB.ui={tab:'home'};
   if(!DB.currentUserId) DB.currentUserId = DB.users[0].id;
   DB.branches = (DB.branches&&DB.branches.length)?DB.branches:defaultDB().branches;
 }
@@ -112,7 +123,7 @@ function addScan(sessionId, input, extra){
     time: Date.now(), operator: (extra&&extra.operator)||currentUser().name,
     notes: (extra&&extra.notes)||'', photo: (extra&&extra.photo)||null,
   };
-  DB.scans.push(rec); saveDB();
+  DB.scans.push(rec); saveDBSoon();
   return rec;
 }
 

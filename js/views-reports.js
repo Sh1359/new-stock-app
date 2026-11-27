@@ -2,14 +2,14 @@
 const VRep = {
   render(root){
     const s=activeSession(); if(!s){ root.innerHTML=''; return; }
-    const C=aggregate(s.id).counts;
+    const mgr=isMgr();
     root.innerHTML =
     '<div class="card"><h3>📄 '+t('varianceReport')+'</h3><p style="color:var(--sub);font-size:13px">'+t('varianceDesc')+'</p>'+
       '<div class="grid2"><div class="field"><label>'+t('reportType')+'</label><select id="rp-type"><option value="ALL">'+t('allIssues')+'</option><option value="SHORT">'+t('shortOnly')+'</option><option value="EXCESS">'+t('excessOnly')+'</option><option value="ALLART">'+t('fullList')+'</option></select></div>'+
       '<div class="field"><label>'+t('category')+'</label><select id="rp-cat"><option value="">'+t('allCat')+'</option>'+VStock.cats().map(c=>'<option>'+esc(c)+'</option>').join('')+'</select></div></div>'+
-      '<div class="btn-row"><button class="btn btn-primary" onclick="VRep.preview()">👁️ '+t('preview')+'</button><button class="btn btn-soft" onclick="VRep.pdf()">🖨️ '+t('printPDF')+'</button><button class="btn btn-soft" onclick="VRep.csv()">⬇️ CSV</button></div></div>'+
-    '<div class="card"><h3>📑 '+t('moreReports')+'</h3>'+
-    '<div class="btn-row"><button class="btn btn-white btn-sm" onclick="App.exportLogCSV()">🧾 '+t('scanLog')+' CSV</button><button class="btn btn-white btn-sm" onclick="App.exportMasterCSV()">📦 '+t('master')+' CSV</button><button class="btn btn-white btn-sm" onclick="VRep.pdfSummary()">📋 '+t('summarySlip')+'</button></div></div>'+
+      '<div class="btn-row"><button class="btn btn-primary" onclick="VRep.preview()">👁️ '+t('preview')+'</button>'+(mgr?'<button class="btn btn-soft" onclick="VRep.pdf()">🖨️ '+t('printPDF')+'</button><button class="btn btn-soft" onclick="VRep.csv()">⬇️ CSV</button>':'')+'</div></div>'+
+    (mgr?'<div class="card"><h3>📑 '+t('moreReports')+'</h3>'+
+    '<div class="btn-row"><button class="btn btn-white btn-sm" onclick="App.exportLogCSV()">🧾 '+t('scanLog')+' CSV</button><button class="btn btn-white btn-sm" onclick="App.exportMasterCSV()">📦 '+t('master')+' CSV</button><button class="btn btn-white btn-sm" onclick="VRep.pdfSummary()">📋 '+t('summarySlip')+'</button></div></div>':'')+
     '<div id="rp-prev"></div>';
   },
   rows(){
@@ -24,8 +24,9 @@ const VRep = {
     return rows;
   },
   head(extra){
-    const s=activeSession();
-    return '<div class="print-head"><div class="print-logo">Shazim</div><div class="print-title">'+t('appName')+' — '+t('varianceReport')+'</div>'+
+    const s=activeSession(), c=DB.company;
+    return '<div class="print-head"><div class="print-logo">'+esc(c.name)+'</div><div class="print-title">'+t('varianceReport')+'</div>'+
+    '<div class="print-meta">'+esc(c.addr)+' • '+esc(c.phone)+'</div>'+
     '<div class="print-meta">'+esc(s.name)+' • '+esc(currentUser().name)+' • '+fmtDateTime(Date.now())+(extra||'')+'</div></div>';
   },
   foot(){ return '<div class="print-sign"><div>'+t('preparedBy')+' __________</div><div>'+t('checkedBy')+' __________</div><div>'+t('signDate')+' ___/___/___</div></div>'; },
@@ -39,14 +40,16 @@ const VRep = {
     document.getElementById('rp-prev').innerHTML='<div class="card print-area" id="printable">'+this.head(' • '+rows.length+' '+t('foundX'))+
     '<div class="print-totals"><span>'+t('recCount')+': <b>'+rows.length+'</b></span><span>'+t('totVariance')+': <b>'+fmtTk(totV)+'</b></span></div>'+
     '<div style="overflow-x:auto">'+this.table(rows)+'</div>'+this.foot()+'</div>';
-    document.getElementById('rp-prev').scrollIntoView({behavior:'smooth'});
+    try{document.getElementById('rp-prev').scrollIntoView({behavior:'smooth'});}catch(e){}
   },
   pdf(){
+    if(!isMgr()){ toast(t('needManager')); return; }
     if(!document.getElementById('printable')) this.preview();
     audit('report.print', 'variance'); saveDB();
     setTimeout(()=>window.print(), 150);
   },
   csv(){
+    if(!isMgr()){ toast(t('needManager')); return; }
     const rows=this.rows(), s=activeSession();
     const head='Article,Category,System,Physical,Diff,Price,Variance\n';
     const body=rows.map(r=>[r.a.art,r.a.cat,r.a.system,r.p,r.d,r.a.price,r.v].join(',')).join('\n');
@@ -54,6 +57,7 @@ const VRep = {
     audit('report.csv','variance'); saveDB(); toast(t('downloaded'));
   },
   pdfSummary(){
+    if(!isMgr()){ toast(t('needManager')); return; }
     const s=activeSession(), A=aggregate(s.id), C=A.counts;
     openModal('<div class="print-area" id="printable">'+this.head()+
     '<div class="print-totals"><span>🧾 '+t('totalScan')+': <b>'+fmtNum(C.total)+'</b></span><span>✅ M: <b>'+fmtNum(C.MATCHED)+'</b></span><span>✍️: <b>'+fmtNum(C.MANUAL)+'</b></span><span>⛔: <b>'+fmtNum(C.DUPLICATE)+'</b></span><span>❓: <b>'+fmtNum(C['NOT FOUND'])+'</b></span></div>'+
@@ -79,7 +83,6 @@ const VIns = {
     sessionScans(s.id).forEach(r=>{ byOp[r.operator||'?']=(byOp[r.operator||'?']||0)+1; const h=new Date(r.time).getHours(); byHour[h]++; });
     const ops=Object.keys(byOp).sort((a,b)=>byOp[b]-byOp[a]).slice(0,6);
     const pkH=byHour.indexOf(Math.max.apply(null,byHour));
-    const zero=A.rows.filter(r=>r.p===0);
     const noMove=A.rows.filter(r=>r.a.system>0&&r.p===0);
     root.innerHTML =
     '<div class="kpis">'+
@@ -91,12 +94,10 @@ const VIns = {
     '<div class="card"><h3>👥 '+t('opBoard')+'</h3><canvas class="chart" id="ch-ops"></canvas></div>'+
     '<div class="card"><h3>📂 '+t('catHeat')+'</h3><div id="ch-cats"></div></div>'+
     '<div class="card"><h3>💡 '+t('suggest')+'</h3><div id="sg-list"></div></div>';
-    drawBars(document.getElementById('ch-ops'), ops.map((o,i)=>({l:o.slice(0,12), v:byOp[o], c:['#F97316','#0EA5E9','#16A34A','#A855F7','#EC4899','#F59E0B'][i%6]})) );
-    // category heat: top shorts by category
+    drawBars(document.getElementById('ch-ops'), ops.map((o,i)=>({l:o.slice(0,12), v:byOp[o], c:['#20907F','#4A90D9','#3D9A6C','#8E7CC3','#D98BB0','#C08A2E'][i%6]})) );
     const cb={}; A.shorts.forEach(r=>{ cb[r.a.cat]=cb[r.a.cat]||{n:0,v:0}; cb[r.a.cat].n++; cb[r.a.cat].v+=Math.abs(r.v); });
     const ck=Object.keys(cb).sort((a,b)=>cb[b].v-cb[a].v).slice(0,8);
     document.getElementById('ch-cats').innerHTML=ck.length?ck.map(k=>'<div class="mrow"><b>Cat '+esc(k)+'</b><span style="flex:1"></span><span>'+cb[k].n+' items</span><b class="neg">'+fmtTk(-cb[k].v)+'</b></div>').join(''):'<div class="empty"><p>✅</p></div>';
-    // suggestions
     const sg=[];
     if(A.shorts.length) sg.push(['📉', t('sgRecount').replace('{n}', A.shorts.slice(0,3).map(r=>r.a.art).join(', '))]);
     if(A.excess.length) sg.push(['📈', t('sgExcess')]);

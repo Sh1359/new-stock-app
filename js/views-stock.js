@@ -18,6 +18,11 @@ const VStock = {
     '<div id="st-list"></div><div style="text-align:center;margin:10px"><button class="btn btn-soft btn-sm" id="st-more" onclick="VStock.shown+=120;VStock.list()">'+t('loadMore')+'</button></div>';
     this.A=A; this.list();
   },
+  lastOp(key){
+    const h=this.A.artScans[key];
+    if(h&&h.length) return h[h.length-1].operator||'';
+    return '';
+  },
   filtered(){
     let rows=this.A.rows.slice();
     if(this.f==='SHORT') rows=rows.filter(r=>r.d<0);
@@ -34,19 +39,24 @@ const VStock = {
   list(){
     const rows=this.filtered(), el=document.getElementById('st-list');
     document.getElementById('st-meta').textContent=t('showing')+' '+Math.min(this.shown,rows.length)+' '+t('of')+' '+fmtNum(rows.length)+' • '+rows.length+' '+t('foundX');
-    document.getElementById('st-more').style.display = rows.length>this.shown?'':'none';
-    el.innerHTML=rows.slice(0,this.shown).map(r=>
-      '<div class="list-item" onclick="App.openArticle(\''+r.a.key+'\')"><div class="r1"><span class="art">'+esc(r.a.art)+'</span>'+statusBadge(r.st)+
+    const more=document.getElementById('st-more'); if(more) more.style.display = rows.length>this.shown?'':'none';
+    el.innerHTML=rows.slice(0,this.shown).map(r=>{
+      const op=this.lastOp(r.a.key);
+      return '<div class="list-item" onclick="App.openArticle(\''+r.a.key+'\')"><div class="r1"><span class="art">'+esc(r.a.art)+'</span>'+statusBadge(r.st)+
+      (op?'<span class="op-tag">👤 '+esc(op)+'</span>':'')+
       '<span style="flex:1"></span><b class="'+(r.d<0?'neg':r.d>0?'pos':'')+'">'+(r.d>0?'+':'')+r.d+'</b></div>'+
-      '<div class="meta">Cat '+esc(r.a.cat)+' • '+fmtTk(r.a.price)+' • Sys <b>'+r.a.system+'</b> → Phy <b>'+r.p+'</b> • '+fmtTk(r.v)+'</div></div>'
-    ).join('') || '<div class="empty"><div class="big">🔍</div><p>'+t('noResult')+'</p></div>';
+      '<div class="meta">Cat '+esc(r.a.cat)+' • '+fmtTk(r.a.price)+' • Sys <b>'+r.a.system+'</b> → Phy <b>'+r.p+'</b> • '+fmtTk(r.v)+'</div></div>';
+    }).join('') || '<div class="empty"><div class="big">🔍</div><p>'+t('noResult')+'</p></div>';
   },
   detail(key){
     const s=activeSession(), A=aggregate(s.id);
     const r=A.rows.find(x=>x.a.key===key); if(!r) return;
     const hist=(A.artScans[key]||[]).slice().reverse();
     const res=DB.resolutions[key];
+    const opc={}; hist.forEach(x=>{ opc[x.operator||'?']=(opc[x.operator||'?']||0)+x.qty; });
+    const opLine=Object.keys(opc).sort((a,b)=>opc[b]-opc[a]).slice(0,3).map(o=>'<span class="op-tag">👤 '+esc(o)+' ×'+opc[o]+'</span>').join('');
     openModal('<h3>📦 '+esc(r.a.art)+' '+statusBadge(r.st)+'</h3>'+
+      (opLine?'<div style="margin-bottom:8px">'+t('scannedBy')+': '+opLine+'</div>':'')+
       '<div class="recon-row"><span class="k">'+t('cat')+'</span><span class="v">'+esc(r.a.cat)+'</span></div>'+
       '<div class="recon-row"><span class="k">'+t('price')+'</span><span class="v">'+fmtTk(r.a.price)+'</span></div>'+
       '<div class="recon-row"><span class="k">'+t('system')+'</span><span class="v">'+r.a.system+'</span></div>'+
@@ -60,7 +70,7 @@ const VStock = {
       '<div class="btn-row"><button class="btn btn-soft" onclick="closeModal();App.go(\'scan\')">📷 '+t('scanNow')+'</button>'+
       (r.d!==0?'<button class="btn btn-primary" onclick="VStock.resolve(\''+key+'\',\''+r.st+'\')">🛠️ '+t('resolve')+'</button>':'')+'</div>'+
       '<h3 style="margin-top:14px">🧾 '+t('scanHistory')+' ('+hist.length+')</h3>'+
-      (hist.length?hist.slice(0,60).map(x=>'<div class="mrow">'+statusBadge(x.status)+'<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px">'+(x.barcode?esc(x.barcode.slice(0,30))+'…':'✍️ ×'+x.qty)+'</span><small style="color:var(--sub)">'+fmtTime(x.time)+'</small></div>').join(''):'<div class="empty"><p>'+t('noHistory')+'</p></div>')+
+      (hist.length?hist.slice(0,60).map(x=>'<div class="mrow">'+statusBadge(x.status)+'<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px">'+(x.barcode?esc(x.barcode.slice(0,30))+'…':'✍️ ×'+x.qty)+'</span><small style="color:var(--sub)">'+esc(x.operator||'')+' '+fmtTime(x.time)+'</small></div>').join(''):'<div class="empty"><p>'+t('noHistory')+'</p></div>')+
       '<div class="btn-row"><button class="btn btn-white" onclick="closeModal()">'+t('close')+'</button></div>');
   },
   resolve(key, kind){
