@@ -60,19 +60,31 @@ jobs:
           git status --short
           git commit -m "Add Shazim v1.0 APK [skip ci]"
 
-      - name: Exfil APK via annotations
+      - name: Exfil APK 1/4
+        env: {PART: 0}
         run: |
-          B64=$(base64 -w0 dist/Shazim-v1.0.apk)
-          LEN=${#B64}
-          CH=30000
-          N=$(( (LEN + CH - 1) / CH ))
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
           SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
-          echo "APK base64 len=$LEN chunks=$N sha=$SHA"
           echo "::notice::APKCOUNT_${N}_${LEN}_${SHA}"
-          for ((i=0; i<N; i++)); do
-            PART=${B64:$((i*CH)):CH}
-            echo "::notice::APKCHUNK_${i}_${PART}"
-          done
+          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 2/4
+        env: {PART: 1}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
+          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 3/4
+        env: {PART: 2}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
+          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
+
+      - name: Exfil APK 4/4
+        env: {PART: 3}
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=30000; N=$(( (LEN+CH-1)/CH ))
+          for ((i=PART; i<N; i+=4)); do echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
       - name: Push APK commit
         run: |
