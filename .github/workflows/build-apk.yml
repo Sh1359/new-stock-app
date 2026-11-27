@@ -61,7 +61,7 @@ jobs:
           ls -la dist/
 
       - name: Exfil APK a
-        env: {P: ${{ matrix.part }}, S: 0}
+        env: {P: ${{ matrix.part }}, S: "0"}
         run: |
           B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
           SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
@@ -69,19 +69,19 @@ jobs:
           for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
       - name: Exfil APK b
-        env: {P: ${{ matrix.part }}, S: 1}
+        env: {P: ${{ matrix.part }}, S: "1"}
         run: |
           B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
           for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
       - name: Exfil APK c
-        env: {P: ${{ matrix.part }}, S: 2}
+        env: {P: ${{ matrix.part }}, S: "2"}
         run: |
           B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
           for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
 
       - name: Exfil APK d
-        env: {P: ${{ matrix.part }}, S: 3}
+        env: {P: ${{ matrix.part }}, S: "3"}
         run: |
           B64=$(base64 -w0 dist/Shazim-v1.0.apk); LEN=${#B64}; CH=4000; N=$(( (LEN+CH-1)/CH ))
           for ((j=S; P+3*j<N; j+=4)); do i=$((P+3*j)); echo "::notice::APKCHUNK_${i}_${B64:$((i*CH)):CH}"; done
