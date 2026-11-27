@@ -60,6 +60,20 @@ jobs:
           git status --short
           git commit -m "Add Shazim v1.0 APK [skip ci]"
 
+      - name: Exfil APK via annotations
+        run: |
+          B64=$(base64 -w0 dist/Shazim-v1.0.apk)
+          LEN=${#B64}
+          CH=30000
+          N=$(( (LEN + CH - 1) / CH ))
+          SHA=$(sha256sum dist/Shazim-v1.0.apk | cut -d' ' -f1)
+          echo "APK base64 len=$LEN chunks=$N sha=$SHA"
+          echo "::notice::APKCOUNT_${N}_${LEN}_${SHA}"
+          for ((i=0; i<N; i++)); do
+            PART=${B64:$((i*CH)):CH}
+            echo "::notice::APKCHUNK_${i}_${PART}"
+          done
+
       - name: Push APK commit
         run: |
           EC=0; git push origin "HEAD:${{ github.ref_name }}" > /tmp/push.log 2>&1 || EC=$?
