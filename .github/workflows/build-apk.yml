@@ -16,8 +16,6 @@ on:
       - 'js/**'
       - 'data/**'
       - 'icons/**'
-    paths-ignore:
-      - 'dist/**'
 
 jobs:
   build:
